@@ -1,0 +1,162 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Operational flow: crossing the air gap to the frequency converter drives</title>
+<style>
+  html, body { margin: 0; background: #ffffff; color: #1b2430; font-family: system-ui, -apple-system, "Segoe UI", Roboto, Arial, sans-serif; }
+  main { max-width: 1040px; margin: 0 auto; padding: 24px 16px 40px; }
+  h1 { font-size: 1.25rem; font-weight: 650; margin: 0 0 4px; }
+  p.sub { margin: 0 0 16px; color: #4a5565; font-size: .95rem; max-width: 70ch; }
+  .wrap { overflow-x: auto; border: 1px solid #d5dbe3; border-radius: 6px; }
+  svg { display: block; width: 100%; min-width: 760px; height: auto; }
+  button { margin-top: 14px; font: inherit; padding: 8px 14px; border: 1px solid #1b2430; background: #1b2430; color: #fff; border-radius: 4px; cursor: pointer; }
+  button:focus-visible { outline: 3px solid #1f5fa8; outline-offset: 2px; }
+  p.cap { font-size: .85rem; color: #4a5565; margin: 12px 0 0; max-width: 80ch; }
+</style>
+</head>
+<body>
+<main>
+  <h1>Operational flow: crossing the air gap to the frequency converter drives</h1>
+  <p class="sub">A Stuxnet-style attack path from a third-party contractor's removable drive down to the converter drives, with the points where the course tools would sit.</p>
+
+  <div class="wrap">
+  <svg id="diagram" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1000 720" role="img" aria-label="Flow diagram of the attack path from an infected USB drive across the air gap to the frequency converter drives">
+    <style>
+      text { font-family: system-ui, -apple-system, "Segoe UI", Roboto, Arial, sans-serif; fill: #1b2430; }
+      .lane { fill: #f3f5f8; stroke: #d5dbe3; stroke-width: 1; }
+      .gap  { fill: #fff6f5; stroke: #b3261e; stroke-width: 1.5; stroke-dasharray: 8 5; }
+      .lanelabel { font-size: 13px; font-weight: 600; }
+      .box { fill: #ffffff; stroke: #1b2430; stroke-width: 1.5; }
+      .boxfalse { fill: #fff4e5; stroke: #c26a00; stroke-width: 1.5; }
+      .t1 { font-size: 14px; font-weight: 650; }
+      .t2 { font-size: 11.5px; fill: #4a5565; }
+      .atk { stroke: #b3261e; stroke-width: 2.5; fill: none; marker-end: url(#ar); }
+      .fls { stroke: #c26a00; stroke-width: 2.5; fill: none; stroke-dasharray: 7 5; marker-end: url(#af); }
+      .tool { fill: #e7f0fb; stroke: #1f5fa8; stroke-width: 1.2; }
+      .tooltxt { font-size: 11.5px; font-weight: 600; fill: #1f5fa8; }
+      .num { fill: #b3261e; }
+      .numtxt { font-size: 12px; font-weight: 700; fill: #fff; text-anchor: middle; }
+    </style>
+    <defs>
+      <marker id="ar" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="8" markerHeight="8" orient="auto-start-reverse"><path d="M0 0 L10 5 L0 10 z" fill="#b3261e"/></marker>
+      <marker id="af" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="8" markerHeight="8" orient="auto-start-reverse"><path d="M0 0 L10 5 L0 10 z" fill="#c26a00"/></marker>
+    </defs>
+    <rect width="1000" height="720" fill="#ffffff"/>
+
+    <!-- Lanes -->
+    <rect class="lane" x="10" y="20" width="980" height="100"/>
+    <rect class="gap"  x="10" y="120" width="980" height="80"/>
+    <rect class="lane" x="10" y="200" width="980" height="150"/>
+    <rect class="lane" x="10" y="350" width="980" height="130"/>
+    <rect class="lane" x="10" y="480" width="980" height="130"/>
+
+    <text class="lanelabel" x="800" y="42">Outside the facility</text>
+    <text class="lanelabel" x="800" y="140" style="fill:#b3261e">Air gap</text>
+    <text class="lanelabel" x="800" y="222">Windows engineering and supervisory network</text>
+    <text class="lanelabel" x="800" y="372">Controller layer</text>
+    <text class="lanelabel" x="800" y="502">Field layer</text>
+
+    <!-- Boxes -->
+    <rect class="box" x="170" y="48" width="260" height="56" rx="4"/>
+    <text class="t1" x="184" y="70">Infected USB drive prepared</text>
+    <text class="t2" x="184" y="90">Shortcut-file exploit and signed rootkit drivers</text>
+
+    <rect class="box" x="170" y="140" width="260" height="52" rx="4"/>
+    <text class="t1" x="184" y="162">Contractor or insider</text>
+    <text class="t2" x="184" y="180">Carries the drive across the air gap</text>
+
+    <rect class="box" x="30" y="238" width="250" height="58" rx="4"/>
+    <text class="t1" x="44" y="261">Engineering workstation</text>
+    <text class="t2" x="44" y="280">Rootkit drivers installed on the host</text>
+
+    <rect class="box" x="360" y="238" width="250" height="58" rx="4"/>
+    <text class="t1" x="374" y="261">WinCC server and Step 7 files</text>
+    <text class="t2" x="374" y="280">Spread across the plant network</text>
+
+    <rect class="box" x="690" y="238" width="270" height="58" rx="4"/>
+    <text class="t1" x="704" y="261">Siemens library s7otbxdx.dll replaced</text>
+    <text class="t2" x="704" y="280">Hides injected code from engineers</text>
+
+    <rect class="box" x="360" y="388" width="250" height="58" rx="4"/>
+    <text class="t1" x="374" y="411">Siemens S7-315 controller</text>
+    <text class="t2" x="374" y="430">CP 342-5 module, malicious blocks added</text>
+
+    <rect class="boxfalse" x="690" y="388" width="270" height="58" rx="4"/>
+    <text class="t1" x="704" y="411">Operator screens</text>
+    <text class="t2" x="704" y="430">Replayed normal readings</text>
+
+    <rect class="box" x="30" y="520" width="280" height="58" rx="4"/>
+    <text class="t1" x="44" y="543">Frequency converter drives</text>
+    <text class="t2" x="44" y="562">Profibus identifiers 7050h and 9500h</text>
+
+    <rect class="box" x="420" y="520" width="250" height="58" rx="4"/>
+    <text class="t1" x="434" y="543">Centrifuge motors</text>
+    <text class="t2" x="434" y="562">Driven outside the safe range</text>
+
+    <!-- Attack path -->
+    <path class="atk" d="M300 104 V140"/>
+    <path class="atk" d="M300 192 V215 H155 V238"/>
+    <path class="atk" d="M280 267 H360"/>
+    <path class="atk" d="M610 267 H690"/>
+    <path class="atk" d="M825 296 V330 H485 V388"/>
+    <path class="atk" d="M485 446 V490 H170 V520"/>
+    <path class="atk" d="M310 549 H420"/>
+    <!-- False data path -->
+    <path class="fls" d="M610 417 H690"/>
+
+    <!-- Step numbers -->
+    <circle class="num" cx="300" cy="122" r="11"/><text class="numtxt" x="300" y="126">1</text>
+    <circle class="num" cx="155" cy="218" r="11"/><text class="numtxt" x="155" y="222">2</text>
+    <circle class="num" cx="320" cy="253" r="11"/><text class="numtxt" x="320" y="257">3</text>
+    <circle class="num" cx="650" cy="253" r="11"/><text class="numtxt" x="650" y="257">4</text>
+    <circle class="num" cx="485" cy="470" r="11"/><text class="numtxt" x="485" y="474">5</text>
+    <circle class="num" cx="650" cy="403" r="11" style="fill:#c26a00"/><text class="numtxt" x="650" y="407">6</text>
+
+    <!-- Course tools -->
+    <rect class="tool" x="30" y="304" width="130" height="24" rx="12"/><text class="tooltxt" x="95" y="320" text-anchor="middle">Security Onion</text>
+    <rect class="tool" x="360" y="304" width="170" height="24" rx="12"/><text class="tooltxt" x="445" y="320" text-anchor="middle">Snort and firewall rules</text>
+    <rect class="tool" x="200" y="399" width="100" height="24" rx="12"/><text class="tooltxt" x="250" y="415" text-anchor="middle">Wireshark</text>
+    <rect class="tool" x="690" y="454" width="160" height="24" rx="12"/><text class="tooltxt" x="770" y="470" text-anchor="middle">Security Onion baseline</text>
+
+    <!-- Legend (UPDATED) -->
+    <text x="30" y="640" style="font-size:13px;font-weight:650">Key</text>
+
+    <path class="atk" d="M30 662 H100"/>
+    <text x="112" y="666" style="font-size:12.5px">Attack path (Steps 1 to 5)</text>
+
+    <path class="fls" d="M430 662 H500"/>
+    <text x="512" y="666" style="font-size:12.5px">False data replayed to operators (Step 6)</text>
+
+    <rect class="tool" x="30" y="682" width="60" height="20" rx="10"/>
+    <text x="112" y="696" style="font-size:12.5px">Where a course tool would sit</text>
+  </svg>
+  </div>
+
+  <button type="button" id="dl">Download PNG</button>
+  <p class="cap">Figure: operational flow of a Stuxnet-style attack, from a contractor's removable drive across the air gap to the frequency converter drives. Steps 1 to 6 follow the Phase 2 playbook.</p>
+</main>
+
+<script>
+  document.getElementById('dl').addEventListener('click', function () {
+    var svg = document.getElementById('diagram');
+    var xml = new XMLSerializer().serializeToString(svg);
+    var img = new Image();
+    var scale = 2;
+    img.onload = function () {
+      var c = document.createElement('canvas');
+      c.width = 1000 * scale; c.height = 720 * scale;
+      var ctx = c.getContext('2d');
+      ctx.fillStyle = '#ffffff'; ctx.fillRect(0, 0, c.width, c.height);
+      ctx.drawImage(img, 0, 0, c.width, c.height);
+      var a = document.createElement('a');
+      a.download = 'stuxnet_attack_flow.png';
+      a.href = c.toDataURL('image/png');
+      a.click();
+    };
+    img.src = 'data:image/svg+xml;charset=utf-8,' + encodeURIComponent(xml);
+  });
+</script>
+</body>
+</html>
