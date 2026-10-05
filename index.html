@@ -27,13 +27,14 @@
       text { font-family: system-ui, -apple-system, "Segoe UI", Roboto, Arial, sans-serif; fill: #1b2430; }
       .lane { fill: #f3f5f8; stroke: #d5dbe3; stroke-width: 1; }
       .gap  { fill: #fff6f5; stroke: #b3261e; stroke-width: 1.5; stroke-dasharray: 8 5; }
-      .lanelabel { font-size: 13px; font-weight: 600; }
+      .lanelabel { font-size: 13px; font-weight: 600; text-anchor: end; }
       .box { fill: #ffffff; stroke: #1b2430; stroke-width: 1.5; }
       .boxfalse { fill: #fff4e5; stroke: #c26a00; stroke-width: 1.5; }
       .t1 { font-size: 14px; font-weight: 650; }
       .t2 { font-size: 11.5px; fill: #4a5565; }
       .atk { stroke: #b3261e; stroke-width: 2.5; fill: none; marker-end: url(#ar); }
       .fls { stroke: #c26a00; stroke-width: 2.5; fill: none; stroke-dasharray: 7 5; marker-end: url(#af); }
+      .link { stroke: #1f5fa8; stroke-width: 1.2; stroke-dasharray: 3 3; fill: none; }
       .tool { fill: #e7f0fb; stroke: #1f5fa8; stroke-width: 1.2; }
       .tooltxt { font-size: 11.5px; font-weight: 600; fill: #1f5fa8; }
       .num { fill: #b3261e; }
@@ -52,11 +53,11 @@
     <rect class="lane" x="10" y="350" width="980" height="130"/>
     <rect class="lane" x="10" y="480" width="980" height="130"/>
 
-    <text class="lanelabel" x="800" y="42">Outside the facility</text>
-    <text class="lanelabel" x="800" y="140" style="fill:#b3261e">Air gap</text>
-    <text class="lanelabel" x="800" y="222">Windows engineering and supervisory network</text>
-    <text class="lanelabel" x="800" y="372">Controller layer</text>
-    <text class="lanelabel" x="800" y="502">Field layer</text>
+    <text class="lanelabel" x="975" y="42">Outside the facility</text>
+    <text class="lanelabel" x="975" y="140" style="fill:#b3261e">Air gap</text>
+    <text class="lanelabel" x="975" y="222">Windows engineering and supervisory network</text>
+    <text class="lanelabel" x="975" y="372">Controller layer</text>
+    <text class="lanelabel" x="975" y="502">Field layer</text>
 
     <!-- Boxes -->
     <rect class="box" x="170" y="48" width="260" height="56" rx="4"/>
@@ -106,9 +107,10 @@
     <!-- False data path -->
     <path class="fls" d="M610 417 H690"/>
 
-    <!-- Step numbers -->
+    <!-- Step numbers: 1 = crossing, 2 = rootkit on host, 3 = spread, 4 = target check and library swap, 5 = controller code and drives, 6 = replayed data -->
+    <circle class="num" cx="300" cy="166" r="0"/>
     <circle class="num" cx="300" cy="122" r="11"/><text class="numtxt" x="300" y="126">1</text>
-    <circle class="num" cx="155" cy="218" r="11"/><text class="numtxt" x="155" y="222">2</text>
+    <circle class="num" cx="262" cy="256" r="11"/><text class="numtxt" x="262" y="260">2</text>
     <circle class="num" cx="320" cy="253" r="11"/><text class="numtxt" x="320" y="257">3</text>
     <circle class="num" cx="650" cy="253" r="11"/><text class="numtxt" x="650" y="257">4</text>
     <circle class="num" cx="485" cy="470" r="11"/><text class="numtxt" x="485" y="474">5</text>
@@ -117,10 +119,11 @@
     <!-- Course tools -->
     <rect class="tool" x="30" y="304" width="130" height="24" rx="12"/><text class="tooltxt" x="95" y="320" text-anchor="middle">Security Onion</text>
     <rect class="tool" x="360" y="304" width="170" height="24" rx="12"/><text class="tooltxt" x="445" y="320" text-anchor="middle">Snort and firewall rules</text>
-    <rect class="tool" x="200" y="399" width="100" height="24" rx="12"/><text class="tooltxt" x="250" y="415" text-anchor="middle">Wireshark</text>
+    <rect class="tool" x="245" y="399" width="100" height="24" rx="12"/><text class="tooltxt" x="295" y="415" text-anchor="middle">Wireshark</text>
+    <path class="link" d="M345 411 H360"/>
     <rect class="tool" x="690" y="454" width="160" height="24" rx="12"/><text class="tooltxt" x="770" y="470" text-anchor="middle">Security Onion baseline</text>
 
-    <!-- Legend (UPDATED) -->
+    <!-- Legend -->
     <text x="30" y="640" style="font-size:13px;font-weight:650">Key</text>
 
     <path class="atk" d="M30 662 H100"/>
